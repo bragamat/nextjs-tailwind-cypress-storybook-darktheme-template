@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test": "vitest --config ./vitest.config.ts --run",
+    "test:watch": "vitest --config ./vitest.config.ts",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@oss-playground/split": "^2.0.0",
@@ -33,7 +36,9 @@
     "@storybook/nextjs": "^7.0.14",
     "@storybook/react": "^7.0.14",
     "@storybook/testing-library": "^0.0.14-next.2",
+    "cypress": "^12.12.0",
     "eslint-plugin-storybook": "^0.6.12",
-    "storybook": "^7.0.14"
+    "storybook": "^7.0.14",
+    "vitest": "^0.31.1"
   }
 }
