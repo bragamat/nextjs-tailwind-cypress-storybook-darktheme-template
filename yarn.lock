@@ -180,6 +180,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@oss-playground/split@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@oss-playground/split/-/split-2.0.0.tgz#524d6862a961b3130fc482955436ea3fd4cea5a1"
+  integrity sha512-9aO9Tljh5Uu8fPTfxuzU7ZDhKvmM6L9x0CvHSgVfA/yH2EjFxSZtTBocfOaDkaImrBYQzEyIKoybr8NkBceF0Q==
+
 "@pkgr/utils@^2.3.1":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@pkgr/utils/-/utils-2.4.0.tgz#b6373d2504aedaf2fc7cdf2d13ab1f48fa5f12d5"
