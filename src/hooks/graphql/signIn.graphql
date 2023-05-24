@@ -1,0 +1,14 @@
+mutation Login($email: String!, $password: String!, $rememberMe: Boolean) {
+  signIn(email: $email, password: $password, rememberMe: $rememberMe) {
+    user {
+      jwt
+      email
+    }
+    success
+    errors {
+      details
+      field
+      message
+    }
+  }
+}

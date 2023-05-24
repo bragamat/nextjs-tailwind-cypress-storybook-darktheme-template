@@ -380,43 +380,57 @@ export enum VisaEnum {
   Tourism = 'tourism'
 }
 
-export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+export type LoginMutationVariables = Exact<{
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  rememberMe?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
 
 
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string } | null };
+export type LoginMutation = { __typename?: 'Mutation', signIn?: { __typename?: 'SignInPayload', success: boolean, user?: { __typename?: 'User', jwt?: string | null, email?: string | null } | null, errors: Array<{ __typename?: 'Error', details?: any | null, field: string, message: string }> } | null };
 
 
-export const MeDocument = gql`
-    query me {
-  me {
-    id
+export const LoginDocument = gql`
+    mutation Login($email: String!, $password: String!, $rememberMe: Boolean) {
+  signIn(email: $email, password: $password, rememberMe: $rememberMe) {
+    user {
+      jwt
+      email
+    }
+    success
+    errors {
+      details
+      field
+      message
+    }
   }
 }
     `;
+export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
 
 /**
- * __useMeQuery__
+ * __useLoginMutation__
  *
- * To run a query within a React component, call `useMeQuery` and pass it any options that fit your needs.
- * When your component renders, `useMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
  *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const { data, loading, error } = useMeQuery({
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
  *   variables: {
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *      rememberMe: // value for 'rememberMe'
  *   },
  * });
  */
-export function useMeQuery(baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>) {
+export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
       }
-export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
-        }
-export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
-export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
-export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;

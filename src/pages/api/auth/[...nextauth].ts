@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { initializeApollo } from '@/config/graphql';
-import { SignInDocument } from '@/generated/graphql'
+import { LoginDocument } from '@/hooks/graphql';
 import { NextApiRequest, NextApiResponse } from 'next'
-import NextAuth, { AuthOptions } from 'next-auth'
+import NextAuth from 'next-auth'
+import { Session } from 'next-auth';
+import { JWT } from 'next-auth/jwt';
 import Credentials from 'next-auth/providers/credentials'
 
 type AuthorizeProps = {
@@ -10,7 +12,7 @@ type AuthorizeProps = {
   password: string
 }
 
-const options: AuthOptions = {
+const options = {
   pages: {
     signIn: '/login'
   },
@@ -25,7 +27,7 @@ const options: AuthOptions = {
         try {
           const rep = client.mutate(
             {
-              mutation: SignInDocument,
+              mutation: LoginDocument,
               variables: {
                 email,
                 password,
@@ -50,11 +52,11 @@ const options: AuthOptions = {
     })
   ],
   callbacks: {
-    session: async ({ session, token: token, user }) => {
+    session: async ({ session, token: token, user }: Session) => {
       session.user = user
       return await Promise.resolve({ ...session, jwt: token })
     },
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user }: JWT) => {
       if (user) {
         token = { ...user, jwt: (user as any).jwt }
       }
