@@ -55,7 +55,7 @@ function createApolloClient(session?: Session | null) {
   });
 }
 
-export function initializeApollo(
+export function initializeGraphql(
   initialState: NormalizedCacheObject | null = null,
   session?: Session | null
 ) {
@@ -77,7 +77,7 @@ export function initializeApollo(
 
 export function useApollo(initialState = {}, session?: Session) {
   const store = useMemo(
-    () => initializeApollo(initialState, session),
+    () => initializeGraphql(initialState, session),
     [initialState, session]
   );
   return store;
